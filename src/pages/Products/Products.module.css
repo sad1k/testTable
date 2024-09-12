@@ -1,0 +1,12 @@
+.productsTable{
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.productsTable th, td {
+  text-align: center;
+  border: 1px solid #ccc;
+  padding: 8px;
+}

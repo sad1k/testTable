@@ -1,31 +1,40 @@
+import { ReactNode, TableHTMLAttributes } from "react";
 import { getObjectKeys } from "../../utils/getObjectKeys";
-import { getPlainObject } from "../../utils/getPlainObject";
 
- export const TableUI = ({columnLabel, rowData , ...props}) => {
 
-  const keys = getObjectKeys(rowData[0])
+interface TableProps<DataType> extends TableHTMLAttributes<HTMLTableElement> {
+  columns?: string[];
+  header?: ReactNode;
+  data: DataType[];
+  onEdit: () => void
+}
 
-  const data = rowData.map((row) => getPlainObject(row, {}))
+export const TableUI = <DataType extends { [key: string]: unknown },>({columns, header, data, onEdit , ...props}: TableProps<DataType>) => {
 
-  const handleEdit = () => {
-    
+  if(!data.length){
+    return <div>No Data</div>
+  }
+
+  let keys = columns
+
+  if(!columns){
+    keys = getObjectKeys(data[0])
   }
   
   return (
-    <table>
+    <table {...props}>
       <thead>
-        {columnLabel ? columnLabel : 
-          keys.map((key) => <th key={key}>{key}</th>)
-        }
+        {header ? header : keys?.map((key: string) => <th key={key}>{key}</th>)}
       </thead>
       <tbody>
-        {rowData.map((row) => {
+        {data.map((row) => {
           return <tr>
-            {keys.map((key) => {
-              return <td key={key}>{data[key]}</td>
+            {keys?.map((key: string) => {
+              console.log(row)
+              return <td key={key}>{`${row[key]}`}</td>
               })}
               <td>
-                <button onClick={() => handleEdit()}>Edit</button>
+                <button onClick={onEdit}>Edit</button>
               </td>
           </tr>
         })}
