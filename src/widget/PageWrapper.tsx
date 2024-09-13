@@ -1,17 +1,11 @@
-import {
-  ReactNode,
-  SyntheticEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ReactNode, SyntheticEvent, useEffect, useRef, useState } from "react";
 import { InputUI } from "../components/SearchBar/InputUI";
 import { ModalUI } from "../components/Modal/ModalUI";
 import { EditFormUI } from "../components/EditForm/EditForm";
 import { flattenObject } from "../utils/getPlainObject";
 import { FlattenedWithId } from "../types/types";
 import { mapArray } from "../utils/mapArray";
-import search from '../assets/search.svg'
+import search from "../assets/search.svg";
 
 interface PageWrapper<T> {
   Page: (props: PageProps<FlattenedWithId<T>>) => ReactNode;
@@ -36,9 +30,8 @@ export const PageWrapper = <T extends object>({
   const [data, setData] = useState<FlattenedWithId<T>[]>(() => {
     return rawData.map((product) => {
       return flattenObject(product) as FlattenedWithId<T>;
-    })
+    });
   });
-
 
   const [editData, setEditData] = useState<FlattenedWithId<T>>(
     {} as FlattenedWithId<T>
@@ -85,7 +78,12 @@ export const PageWrapper = <T extends object>({
 
   return (
     <div>
-      <InputUI altIcon="search" rightIcon={search} value={value} onChange={(e) => setValue(e.target.value)} />
+      <InputUI
+        altIcon="search"
+        rightIcon={search}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
       <Page
         data={filteredData}
         setEditData={handleEdit}
