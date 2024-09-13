@@ -11,9 +11,10 @@
   `git clone https://github.com/sad1k/testTable.git`
 - Install the dependencies:
 
-```npm install
+```
+npm install
  # or
-   yarn install
+yarn install
 ```
 
 ## Usage
