@@ -1,3 +1,6 @@
+# Deploy
+ - url: https://66e4718356c80c466a7ecd24--zippy-dragon-0e309e.netlify.app/
+
 # Getting Started
 
 ## Prerequisites
