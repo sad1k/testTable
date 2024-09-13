@@ -2,8 +2,9 @@ import { SyntheticEvent, useCallback } from "react";
 import { TableUI } from "../../components/Table/TableUI";
 import styles from "./Products.module.css";
 import { PageProps } from "../../widget/PageWrapper";
+import { FlattenedWithId } from "../../types/types";
 
-export const Products = <T,>({
+export const Products = <T extends FlattenedWithId<object>,>({
   setActive,
   data,
   setEditData,
@@ -11,9 +12,9 @@ export const Products = <T,>({
   const handleEdit = useCallback(
     (
       _: SyntheticEvent<HTMLButtonElement, MouseEvent>,
-      changedData: T
+      changedData: FlattenedWithId<T> 
     ) => {
-      setEditData(_ ,changedData);
+      setEditData(_ ,changedData as T);
       setActive(true);
     },
     []

@@ -7,7 +7,7 @@ interface TableProps<T extends FlattenedWithId<object>> extends TableHTMLAttribu
   columns?: string[];
   header?: ReactNode;
   data: T[];
-  onEdit: (e: SyntheticEvent<HTMLButtonElement, MouseEvent>, _data: T) => void;
+  onEdit: (e: SyntheticEvent<HTMLButtonElement, MouseEvent>, data: FlattenedWithId<T>) => void;
 }
 
 export const TableUI = <T extends FlattenedWithId<object> ,>({
