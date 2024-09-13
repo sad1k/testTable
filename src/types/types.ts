@@ -1,4 +1,3 @@
-
 export type Flattened<T> = {
   [K in keyof T]: T[K] extends object
     ? T[K] extends Array<unknown>
@@ -7,6 +6,6 @@ export type Flattened<T> = {
     : T[K];
 };
 
-export type FlattenedWithId<T> = Flattened<T> & {id: number}
+export type FlattenedWithId<T> = Flattened<T> & { id: number };
 
 export type FlatDataType<T> = Flattened<T>;

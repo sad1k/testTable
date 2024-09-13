@@ -15,21 +15,17 @@ export const ModalUI = ({
   onClose,
   closeOnBackgroundClick,
 }: ModalProps) => {
-  
   return (
     <div
       className={styles.modal + " " + (active ? styles.active : "")}
       onClick={closeOnBackgroundClick ? onClose : () => {}}
     >
-        <div
-          className={styles.modalContent}
-          onClick={(e) => e.stopPropagation()}
-        >
+      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <button className={styles.closeButton} onClick={onClose}>
           <img width="20px" height="20px" src={close} alt="close" />
         </button>
-          {children}
-        </div>
+        {children}
+      </div>
     </div>
   );
 };

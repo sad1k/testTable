@@ -8,7 +8,11 @@ interface TableRowProps<T extends FlattenedWithId<object>> {
 }
 
 export const TableRow = memo(
-  <T extends FlattenedWithId<object>>({ keys, row, onEdit }: TableRowProps<T>) => {
+  <T extends FlattenedWithId<object>>({
+    keys,
+    row,
+    onEdit,
+  }: TableRowProps<T>) => {
     return (
       <tr>
         {keys?.map((key: string) => (
@@ -21,4 +25,6 @@ export const TableRow = memo(
     );
   },
   (prevProps, nextProps) => prevProps.row === nextProps.row
-) as <T extends FlattenedWithId<object>>(props: TableRowProps<T>) => JSX.Element;
+) as <T extends FlattenedWithId<object>>(
+  props: TableRowProps<T>
+) => JSX.Element;

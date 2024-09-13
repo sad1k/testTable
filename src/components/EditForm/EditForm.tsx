@@ -18,9 +18,13 @@ export const EditFormUI = forwardRef<HTMLFormElement, Props>(
         {Object.entries(data).map(([key, value]) => {
           if (typeof value === "string") {
             return (
-              <label key={`form-${key}`} id={`form-${key}`} htmlFor={`form-${key}`}>
+              <label
+                key={`form-${key}`}
+                id={`form-${key}`}
+                htmlFor={`form-${key}`}
+              >
                 <div style={{ textTransform: "capitalize" }}>{key}</div>
-                <InputUI  name={key} />
+                <InputUI name={key} />
               </label>
             );
           }

@@ -4,7 +4,7 @@ import styles from "./Products.module.css";
 import { PageProps } from "../../widget/PageWrapper";
 import { FlattenedWithId } from "../../types/types";
 
-export const Page = <T extends FlattenedWithId<object>,>({
+export const Page = <T extends FlattenedWithId<object>>({
   setActive,
   data,
   setEditData,
@@ -12,9 +12,9 @@ export const Page = <T extends FlattenedWithId<object>,>({
   const handleEdit = useCallback(
     (
       _: SyntheticEvent<HTMLButtonElement, MouseEvent>,
-      changedData: FlattenedWithId<T> 
+      changedData: FlattenedWithId<T>
     ) => {
-      setEditData(_ ,changedData as T);
+      setEditData(_, changedData as T);
       setActive(true);
     },
     []
