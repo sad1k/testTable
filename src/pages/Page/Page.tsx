@@ -4,7 +4,7 @@ import styles from "./Products.module.css";
 import { PageProps } from "../../widget/PageWrapper";
 import { FlattenedWithId } from "../../types/types";
 
-export const Products = <T extends FlattenedWithId<object>,>({
+export const Page = <T extends FlattenedWithId<object>,>({
   setActive,
   data,
   setEditData,

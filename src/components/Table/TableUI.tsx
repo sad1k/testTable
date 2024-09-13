@@ -26,7 +26,9 @@ export const TableUI = <T extends FlattenedWithId<object> ,>({
   return (
     <table {...props}>
       <thead>
+        <tr>
         {header ? header : keys?.map((key: string) => <th key={key}>{key}</th>)}
+        </tr>
       </thead>
       <tbody>
         {data.map((row) => {

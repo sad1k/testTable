@@ -1,12 +1,31 @@
 import { InputHTMLAttributes } from "react";
-import styles from './SearchBar.module.css'
-import searchIcon from '../../assets/search.svg'
+import styles from "./Input.module.css";
 
-export const InputUI = ({...props}: InputHTMLAttributes<HTMLInputElement>) => {
+interface InputUIProps extends InputHTMLAttributes<HTMLInputElement> {
+  leftIcon?: string;
+  rightIcon?: string;
+  altIcon?: string;
+}
+
+export const InputUI = ({
+  leftIcon,
+  rightIcon,
+  altIcon,
+  ...props
+}: InputUIProps) => {
   return (
     <div className={styles.inputWrapper}>
-    <input className={styles.inputStyle} {...props} />
-    <img src={searchIcon} alt="search" width={'20px'} height={'20px'} />
+      {leftIcon ? (
+        <img src={leftIcon} alt={altIcon} width={"20px"} height={"20px"} />
+      ) : (
+        ""
+      )}
+      <input className={styles.inputStyle} {...props} />
+      {rightIcon ? (
+        <img src={rightIcon} alt={altIcon} width={"20px"} height={"20px"} />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

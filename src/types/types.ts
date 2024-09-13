@@ -1,8 +1,7 @@
 
 export type Flattened<T> = {
   [K in keyof T]: T[K] extends object
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ? T[K] extends Array<any>
+    ? T[K] extends Array<unknown>
       ? T[K]
       : Flattened<T[K]>
     : T[K];

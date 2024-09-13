@@ -2,7 +2,6 @@ import {
   ReactNode,
   SyntheticEvent,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
@@ -11,10 +10,12 @@ import { ModalUI } from "../components/Modal/ModalUI";
 import { EditFormUI } from "../components/EditForm/EditForm";
 import { flattenObject } from "../utils/getPlainObject";
 import { FlattenedWithId } from "../types/types";
+import { mapArray } from "../utils/mapArray";
+import search from '../assets/search.svg'
 
 interface PageWrapper<T> {
   Page: (props: PageProps<FlattenedWithId<T>>) => ReactNode;
-  filterField: string;
+  filterField: keyof T;
   rawData: T[];
 }
 
@@ -24,7 +25,7 @@ export interface PageProps<T extends FlattenedWithId<object>> {
   setEditData: (
     e: SyntheticEvent<HTMLButtonElement, MouseEvent>,
     data: T
-  ) => void; 
+  ) => void;
 }
 
 export const PageWrapper = <T extends object>({
@@ -32,13 +33,12 @@ export const PageWrapper = <T extends object>({
   filterField,
   rawData,
 }: PageWrapper<T>) => {
-  const data: FlattenedWithId<T>[] = useMemo(
-    () =>
-      rawData.map((product) => {
-        return flattenObject(product) as FlattenedWithId<T>;
-      }),
-    []
-  );
+  const [data, setData] = useState<FlattenedWithId<T>[]>(() => {
+    return rawData.map((product) => {
+      return flattenObject(product) as FlattenedWithId<T>;
+    })
+  });
+
 
   const [editData, setEditData] = useState<FlattenedWithId<T>>(
     {} as FlattenedWithId<T>
@@ -49,11 +49,9 @@ export const PageWrapper = <T extends object>({
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    console.log();
     setFilterData(() => {
       return data.filter((val) => {
         const field = val[filterField as keyof T];
-        console.log(field);
         if (typeof field === "string") {
           return field.includes(value);
         }
@@ -78,34 +76,34 @@ export const PageWrapper = <T extends object>({
       e.preventDefault();
       const form = e.target as HTMLFormElement;
       const formData = new FormData(form);
-      const newData = filteredData.map((val) => {
-        if (editData.id === val.id) {
-          return { ...val, ...Object.fromEntries(formData.entries()) };
-        }
-        return val;
-      });
-      setFilterData(newData);
+      const newData = mapArray(data, editData, formData);
+      setData(newData);
+      setFilterData((filter) => mapArray(filter, editData, formData));
       form.reset();
     }
   };
 
   return (
     <div>
-      <InputUI value={value} onChange={(e) => setValue(e.target.value)} />
+      <InputUI altIcon="search" rightIcon={search} value={value} onChange={(e) => setValue(e.target.value)} />
       <Page
         data={filteredData}
         setEditData={handleEdit}
         setActive={setActive}
       />
-      <ModalUI
-        onClose={() => {
-          formRef.current?.reset();
-          setActive(false);
-        }}
-        active={active}
-      >
-        <EditFormUI ref={formRef} onSubmit={handleSubmit} data={editData} />
-      </ModalUI>
+      {active ? (
+        <ModalUI
+          onClose={() => {
+            formRef.current?.reset();
+            setActive(false);
+          }}
+          active={active}
+        >
+          <EditFormUI ref={formRef} onSubmit={handleSubmit} data={editData} />
+        </ModalUI>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
