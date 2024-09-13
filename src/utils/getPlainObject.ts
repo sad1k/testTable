@@ -1,11 +1,5 @@
-export type Flattened<T> = {
-  [K in keyof T]: T[K] extends object
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ? T[K] extends Array<any>
-      ? T[K]
-      : Flattened<T[K]>
-    : T[K];
-};
+import { Flattened } from "../types/types";
+
 
 export function flattenObject<T extends object>(obj: T): Flattened<T> {
   const result = {} as Flattened<T>;

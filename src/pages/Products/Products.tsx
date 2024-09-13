@@ -1,35 +1,31 @@
-import { useState } from "react";
-import { SearchBarUI } from "../../components/SearchBar/SearchBarUI";
+import { SyntheticEvent, useCallback } from "react";
 import { TableUI } from "../../components/Table/TableUI";
-import rawData from "../../data/products.json";
-import { flattenObject, Flattened } from "../../utils/getPlainObject";
 import styles from "./Products.module.css";
-import { ModalUI } from "../../components/Modal/ModalUI";
+import { PageProps } from "../../widget/PageWrapper";
 
-export const Products = () => {
-  const data: Flattened<(typeof rawData)[0]>[] = rawData.map((product) => {
-    return flattenObject(product);
-  });
-
-  const [value, setValue] = useState("");
-
-  const filteredData = data.filter((product) => {
-    return product.name.includes(value);
-  });
-
-  const handleEdit = () => {};
+export const Products = <T,>({
+  setActive,
+  data,
+  setEditData,
+}: PageProps<T>) => {
+  const handleEdit = useCallback(
+    (
+      _: SyntheticEvent<HTMLButtonElement, MouseEvent>,
+      changedData: T
+    ) => {
+      setEditData(_ ,changedData);
+      setActive(true);
+    },
+    []
+  );
 
   return (
     <>
-      <SearchBarUI value={value} onChange={(e) => setValue(e.target.value)} />
       <TableUI
         onEdit={handleEdit}
         className={styles.productsTable}
-        data={filteredData}
+        data={data}
       />
-      <ModalUI active={false} setActive={() => {}}>
-        {}
-      </ModalUI>
     </>
   );
 };

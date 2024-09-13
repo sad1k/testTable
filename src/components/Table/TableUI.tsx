@@ -1,26 +1,28 @@
-import { ReactNode, TableHTMLAttributes } from "react";
+import { ReactNode, SyntheticEvent, TableHTMLAttributes } from "react";
 import { getObjectKeys } from "../../utils/getObjectKeys";
+import { TableRow } from "../TableRow/TableRow";
+import { FlattenedWithId } from "../../types/types";
 
-
-interface TableProps<DataType> extends TableHTMLAttributes<HTMLTableElement> {
+interface TableProps<T extends FlattenedWithId<object>> extends TableHTMLAttributes<HTMLTableElement> {
   columns?: string[];
   header?: ReactNode;
-  data: DataType[];
-  onEdit: () => void
+  data: T[];
+  onEdit: (e: SyntheticEvent<HTMLButtonElement, MouseEvent>, _data: T) => void;
 }
 
-export const TableUI = <DataType extends { [key: string]: unknown },>({columns, header, data, onEdit , ...props}: TableProps<DataType>) => {
-
-  if(!data.length){
-    return <div>No Data</div>
+export const TableUI = <T extends FlattenedWithId<object> ,>({
+  columns,
+  header,
+  data,
+  onEdit,
+  ...props
+}: TableProps<T>) => {
+  if (!data.length) {
+    return <div>No Data</div>;
   }
 
-  let keys = columns
+  const keys = columns ||  getObjectKeys(data[0]);  
 
-  if(!columns){
-    keys = getObjectKeys(data[0])
-  }
-  
   return (
     <table {...props}>
       <thead>
@@ -28,15 +30,9 @@ export const TableUI = <DataType extends { [key: string]: unknown },>({columns, 
       </thead>
       <tbody>
         {data.map((row) => {
-          return <tr>
-            {keys?.map((key: string) => {
-              console.log(row)
-              return <td key={key}>{`${row[key]}`}</td>
-              })}
-              <td>
-                <button onClick={onEdit}>Edit</button>
-              </td>
-          </tr>
+          return (
+            <TableRow keys={keys || []} onEdit={onEdit} row={row} key={row.id}  />
+          );
         })}
       </tbody>
     </table>

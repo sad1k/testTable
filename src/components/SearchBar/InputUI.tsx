@@ -2,7 +2,7 @@ import { InputHTMLAttributes } from "react";
 import styles from './SearchBar.module.css'
 import searchIcon from '../../assets/search.svg'
 
-export const SearchBarUI = ({...props}: InputHTMLAttributes<HTMLInputElement>) => {
+export const InputUI = ({...props}: InputHTMLAttributes<HTMLInputElement>) => {
   return (
     <div className={styles.inputWrapper}>
     <input className={styles.inputStyle} {...props} />
