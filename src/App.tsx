@@ -4,9 +4,9 @@ import { PageWrapper } from "./widget/PageWrapper";
 import rawDataProducts from "./data/products.json";
 import rawPricePlans from "./data/pricePlans.json";
 import rawPages from "./data/pages.json";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: (

@@ -1,5 +1,5 @@
 # Deploy
- - url: https://66e4718356c80c466a7ecd24--zippy-dragon-0e309e.netlify.app/
+ - url: https://stellular-biscuit-2a459c.netlify.app/
 
 # Getting Started
 
